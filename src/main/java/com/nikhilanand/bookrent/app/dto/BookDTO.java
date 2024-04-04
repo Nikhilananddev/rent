@@ -4,6 +4,7 @@ import com.nikhilanand.bookrent.app.global.AvailabilityStatus;
 import com.nikhilanand.bookrent.app.model.RentalEntity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,10 +20,12 @@ import java.util.Set;
 public class BookDTO {
 
     private Long id;
+    @NotBlank(message = "Title is required")
     private String title;
+    @NotBlank(message = "Author is required")
     private String author;
+    @NotBlank(message = "Genre is required")
     private String genre;
-
     @Enumerated(EnumType.STRING)
     private AvailabilityStatus availabilityStatus;
     @Builder.Default

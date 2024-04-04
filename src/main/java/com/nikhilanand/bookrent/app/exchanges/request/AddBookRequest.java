@@ -8,7 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
+import jakarta.validation.constraints.NotBlank;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -18,16 +18,17 @@ public class AddBookRequest {
 
     @JsonIgnoreProperties
     private Long id;
-
+    @NotBlank(message = "Title is required")
     private String title;
-    private String author;
-    private String genre;
 
+    @NotBlank(message = "Author is required")
+    private String author;
+
+    @NotBlank(message = "Genre is required")
+    private String genre;
     @Enumerated(EnumType.STRING)
     private AvailabilityStatus availabilityStatus;
 
-
-//    private Set<RentalEntity> rentalEntitySet=new HashSet<>();
 
 
 }

@@ -5,6 +5,7 @@ import com.nikhilanand.bookrent.app.exchanges.response.GetAllUserResponse;
 import com.nikhilanand.bookrent.app.exchanges.response.UserResponse;
 import com.nikhilanand.bookrent.app.service.RentService;
 import com.nikhilanand.bookrent.app.service.UserEntityService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +23,7 @@ public class UserController {
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping("/add")
-    public ResponseEntity<UserResponse> createUser(@RequestBody AddUserRequest addUserRequest) {
+    public ResponseEntity<UserResponse> createUser(@Valid @RequestBody AddUserRequest addUserRequest) {
 
         UserResponse createdUser = userService.createUser(addUserRequest);
         if (createdUser != null) {
@@ -44,7 +45,7 @@ public class UserController {
     }
 
     @PutMapping("/update/{userId}")
-    public ResponseEntity<UserResponse> updateUserById(@PathVariable Long userId, @RequestBody AddUserRequest addUserRequest) {
+    public ResponseEntity<UserResponse> updateUserById(@PathVariable Long userId,@Valid @RequestBody AddUserRequest addUserRequest) {
 
         UserResponse user = null;
 

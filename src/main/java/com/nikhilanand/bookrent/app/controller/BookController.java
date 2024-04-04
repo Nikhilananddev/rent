@@ -7,6 +7,7 @@ import com.nikhilanand.bookrent.app.exchanges.response.GetAllBookResponse;
 import com.nikhilanand.bookrent.app.exchanges.response.RentResponse;
 import com.nikhilanand.bookrent.app.service.BookService;
 import com.nikhilanand.bookrent.app.service.RentService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -43,7 +44,7 @@ public class BookController {
 
     @PostMapping("/add")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public ResponseEntity<BookResponse> addBook(@RequestBody AddBookRequest addBookRequest) {
+    public ResponseEntity<BookResponse> addBook(@Valid @RequestBody AddBookRequest addBookRequest) {
         BookResponse newBook = bookService.addBook(addBookRequest);
         if (newBook != null)
             return ResponseEntity.status(HttpStatus.CREATED).body(newBook);
@@ -53,7 +54,7 @@ public class BookController {
 
     @PutMapping("/update/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public ResponseEntity<BookResponse> updateBook(@PathVariable Long id, @RequestBody AddBookRequest addBookRequest) {
+    public ResponseEntity<BookResponse> updateBook(@PathVariable Long id,@Valid @RequestBody AddBookRequest addBookRequest) {
         BookResponse updatedBook = bookService.updateBook(id, addBookRequest);
 
         if (updatedBook != null)
@@ -70,7 +71,7 @@ public class BookController {
     }
 
     @PostMapping("/{bookId}/rent")
-    ResponseEntity<RentResponse> rentBook(@PathVariable("bookId") Long bookId, @RequestBody AddRentRequest addRentRequest) {
+    ResponseEntity<RentResponse> rentBook(@PathVariable("bookId") Long bookId,@Valid @RequestBody AddRentRequest addRentRequest) {
 
         RentResponse rentalEntity = rentService.addRent(bookId, addRentRequest.getUserId());
         if (rentalEntity != null)
@@ -82,7 +83,7 @@ public class BookController {
     }
 
     @PostMapping("/{bookId}/return")
-    ResponseEntity<RentResponse> returnBook(@PathVariable("bookId") Long bookId, @RequestBody AddRentRequest addRentRequest) {
+    ResponseEntity<RentResponse> returnBook(@PathVariable("bookId") Long bookId,@Valid @RequestBody AddRentRequest addRentRequest) {
 
 
         RentResponse rentalEntity = rentService.returnBook(bookId, addRentRequest.getUserId());
